@@ -1,0 +1,31 @@
+## traefik.yml
+
+api:
+  dashboard: true
+  insecure: true
+  debug: true
+
+providers:
+  docker:
+    exposedByDefault: false
+
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+
+certificatesResolvers:
+  myresolver:
+    acme:
+      email: "erwin@gofeels.com"
+      storage: "/letsencrypt/acme.json"
+      tlsChallenge: true
+
+metrics:
+  prometheus: 
+    entryPoint: websecure
+    addEntryPointsLabels: true
+    addServicesLabels: true
+
+accessLog: {}
